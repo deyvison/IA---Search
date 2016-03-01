@@ -3,7 +3,6 @@ class State(object):
     def __init__(self, name):
         self.name = name
 
-
     def addActions(self, actions):
         self.actions = actions
 
@@ -30,8 +29,6 @@ class Search(object):
             new_state = self.choose_state(frontier)
             explored.add(new_state)
 
-
-
             if new_state == self.goal:
                 return new_state
 
@@ -42,7 +39,6 @@ class Search(object):
             for state in new_state.actions:
                 if state not in explored and state not in frontier:
                     frontier.append(state)
-
 
 joao_pessoa = State("joao_pessoa")
 santa_rita = State("santa_rita")
