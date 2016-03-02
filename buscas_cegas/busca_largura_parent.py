@@ -9,10 +9,24 @@ class State(object):
     def __repr__(self):
             return self.name
 
+
+class NodeSearch(object):
+
+    def __init__(self, state):
+        self.state = state
+
+    def set_parent(self, parent):
+        self.parent = parent
+
+    def __repr__(self):
+        return self.state.name
+
+
 class Search(object):
 
     def __init__(self, initial_state, goal):
-        self.initial_state = initial_state
+        self.initial_state = NodeSearch(initial_state)
+        self.initial_state.parent = None
         self.goal = goal
 
     def choose_state(self, frontier):
@@ -27,20 +41,20 @@ class Search(object):
                 return False
 
             new_state = self.choose_state(frontier)
-            explored.add(new_state)
+            explored.add(new_state.state)
 
-            if new_state == self.goal:
+            if new_state.state == self.goal:
                 return new_state
 
+            #print "Estado escolhido: ",new_state
+            #print "Estados da fronteira: ",frontier
+            #print "Estados explorados: ",explored
 
-
-            for state in new_state.actions:
-                if state not in explored and state not in frontier:
-                    frontier.append(state)
-
-            print "Estado escolhido: ",new_state
-            print "Estados da fronteira: ",frontier
-            print "Estados explorados: ",explored
+            for state in new_state.state.actions:
+                if state not in explored:
+                    aux_state = NodeSearch(state)
+                    frontier.append(aux_state)
+                    aux_state.set_parent(new_state)
 
 joao_pessoa = State("joao pessoa")
 itabaiana = State("itabaiana")
@@ -80,8 +94,19 @@ sousa.add_actions([pombal, cajazeiras])
 cajazeiras.add_actions([sousa, itaporanga])
 
 
-print Search(joao_pessoa, cajazeiras).search()
+search = Search(joao_pessoa, cajazeiras)
+result = search.search();
 
+def print_path(state):
+    state_parent = state.parent
+    print state
+
+    while state_parent:
+        print state_parent
+        state_parent = state_parent.parent
+
+
+print_path(result)
 
 
 
