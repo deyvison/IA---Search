@@ -66,7 +66,8 @@ class Search(object):
                     aux_state = NodeSearch(state, state_cost+new_state_cost)
                     self.set_frontier(frontier, aux_state,last_estimate)
                     aux_state.set_parent(new_state)
-                    last_estimate = new_state.state.estimate_cost
+                    #last_estimate = new_state.state.estimate_cost
+                last_estimate = new_state.state.estimate_cost
 
             print "Explorado", new_state,"\n"
             cont +=1
@@ -92,6 +93,9 @@ class Search(object):
 
 class PriorityQueue(list):
     def push(self, element, priority,last_estimate):
+        if element.state == patos:
+            print last_estimate
+            print priority+element.state.estimate_cost - last_estimate, "llllllloOOOOOOOOOOOlllllll"
         heapq.heappush(self, (priority+element.state.estimate_cost - last_estimate, element))
 
     def pop(self):
