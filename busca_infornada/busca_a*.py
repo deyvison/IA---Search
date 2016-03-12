@@ -35,7 +35,7 @@ class Search(object):
 
     def search(self):
         frontier = PriorityQueue()
-        frontier.push(self.start, 0,0)
+        frontier.push(self.start, 0, 0)
         explored = set()
         cont = 1
         last_estimate = 0
@@ -62,16 +62,18 @@ class Search(object):
                 state = state_info[0]
                 state_cost = state_info[1]
 
+                last_estimate = new_state.state.estimate_cost
+
                 if state not in explored:
+
                     aux_state = NodeSearch(state, state_cost+new_state_cost)
                     self.set_frontier(frontier, aux_state,last_estimate)
                     aux_state.set_parent(new_state)
-                    #last_estimate = new_state.state.estimate_cost
-                last_estimate = new_state.state.estimate_cost
 
             print "Explorado", new_state,"\n"
             cont +=1
-    def set_frontier(self, frontier, node_search,last_estimate):
+
+    def set_frontier(self, frontier, node_search, last_estimate):
 
         for node_info in frontier:
             node_cost = node_info[0]
@@ -80,22 +82,21 @@ class Search(object):
             if node.state.name == node_search.state.name:
                 if node_search.cost < node_cost:
                     frontier.remove(node_info)
-                    frontier.push(node_search, node_search.cost,last_estimate)
+                    frontier.push(node_search, node_search.cost, last_estimate)
                     return frontier
                 else:
                     return frontier
 
-        frontier.push(node_search, node_search.cost,last_estimate)
+        frontier.push(node_search, node_search.cost, last_estimate)
 
     def choose_state(self, frontier):
         return frontier.pop()
 
 
 class PriorityQueue(list):
+
     def push(self, element, priority,last_estimate):
-        if element.state == patos:
-            print last_estimate
-            print priority+element.state.estimate_cost - last_estimate, "llllllloOOOOOOOOOOOlllllll"
+
         heapq.heappush(self, (priority+element.state.estimate_cost - last_estimate, element))
 
     def pop(self):
