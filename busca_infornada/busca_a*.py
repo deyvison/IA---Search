@@ -12,7 +12,6 @@ class State(object):
     def __repr__(self):
         return self.name
 
-
 class NodeSearch(object):
 
     def __init__(self, state, cost):
@@ -24,7 +23,6 @@ class NodeSearch(object):
 
     def __repr__(self):
         return self.state.name
-
 
 class Search(object):
 
@@ -41,7 +39,6 @@ class Search(object):
         last_estimate = 0
 
         while True:
-
 
             print "Passo", cont
             print "Fronteira", frontier
@@ -92,17 +89,13 @@ class Search(object):
     def choose_state(self, frontier):
         return frontier.pop()
 
-
 class PriorityQueue(list):
 
     def push(self, element, priority,last_estimate):
-
         heapq.heappush(self, (priority+element.state.estimate_cost - last_estimate, element))
 
     def pop(self):
         return heapq.heappop(self)
-
-
 
 
 joao_pessoa = State("joao pessoa",460)
@@ -130,7 +123,6 @@ mamanguape.add_actions([(santa_rita, 64), (guarabira, 42)])
 guarabira.add_actions([(mamanguape, 42), (areia, 41)])
 areia.add_actions([(guarabira, 41), (campina_grande, 40)])
 campina_grande.add_actions([(itabaiana, 65), (areia, 40), (soledade, 58), (coxixola, 128), (joao_pessoa, 125)])
-
 soledade.add_actions([(campina_grande, 58), (patos, 117), (picui, 69)])
 picui.add_actions([(soledade, 68)])
 coxixola.add_actions([(campina_grande, 128), (monteiro, 83)])
