@@ -53,6 +53,7 @@ class Search(object):
             explored.add(new_state.state)
 
             if new_state.state == self.goal:
+                print "Explorado", new_state
                 return new_state
 
             for state_info in new_state.state.actions:
